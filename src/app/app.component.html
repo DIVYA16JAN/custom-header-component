@@ -1,0 +1,16 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+<ag-grid-angular
+  style="width: 800px; height: 500px;"
+  class="ag-theme-balham"
+  [rowData]="rowData"
+  [columnDefs]="columnDefs"
+  [floatingFilter]="true"
+  
+  [frameworkComponents]="frameworkComponents"
+  [rowSelection]="rowSelection"
+  (filterChanged)="floatingFilter($event)"
+  (rowSelected)="onRowSelected($event)"
+>
+</ag-grid-angular>
+
