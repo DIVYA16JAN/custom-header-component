@@ -68,10 +68,11 @@ export class AppComponent {
     // do the rest
   }
   floatingFilter(event){
+    let headerCheckbox = document.getElementsByClassName('header-checkbox');
+    let filterRowList=event.api.rowModel.getNodesInRangeForSelection();
+    let selectedList = event.api.getSelectedNodes();
+    var filterEnableRow=0, selectedRow=0;
     if(event.api.isAnyFilterPresent()){
-      let filterRowList=event.api.rowModel.getNodesInRangeForSelection();
-      let selectedList = event.api.getSelectedNodes();
-      var filterEnableRow=0, selectedRow=0;
       for(var x=0; x<selectedList.length; x++){
         var isfilterSelected = filterRowList.find(row => row.data.make === selectedList[x].data.make && row.data.opinion === 'y');
         if(isfilterSelected){
@@ -79,17 +80,29 @@ export class AppComponent {
           filterEnableRow++;
           selectedRow++;
         }
+        else{
+          selectedList[x].setSelected(false);
+        }
       }
-
       if(filterEnableRow === selectedRow && filterEnableRow!== 0 && selectedRow!==0){
         headerCheckbox.checked =true;
       }
       else{
         document.querySelector('.header-checkbox').checked =false;
       }
-    } else{
-      event.api.deselectAll();
-      document.querySelector('.header-checkbox').checked =false;
+    } 
+    else{
+      event.api.forEachNodeAfterFilter((rowNode, index) => {
+        if (rowNode.data.opinion ===  'y') {
+          filterEnableRow++;
+        }
+      });
+      if(filterEnableRow === selectedList.length && filterEnableRow!== 0 && selectedList.length!==0){
+        headerCheckbox.checked =true;
+      }
+      else{
+        document.querySelector('.header-checkbox').checked =false;
+      }
     }
   }
   onRowSelected(event) {

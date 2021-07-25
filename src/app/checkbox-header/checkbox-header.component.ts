@@ -32,18 +32,12 @@ export class CheckboxHeaderComponent implements OnDestroy, IHeaderAngularComp {
 
   onCheckboxValueChanged($event: Event) {
     const isSelected = ($event.target as any).checked;
-    //const checkboxList = document.querySelectorAll('input[type=checkbox]');
-    if (isSelected) {
+   if (isSelected) {
       this.params.api.forEachNodeAfterFilter((rowNode, index) => {
         if (rowNode.data.opinion ===  'y') {
           rowNode.setSelected(true, false, true);
         }
       });
-    /*  for(var i=0; i<checkboxList.length; i++){
-        if(checkboxList[i].className === "checked"){
-          checkboxList[i].setAttribute('checked', 'true');
-        }
-      }*/
       this.params.api.refreshCells();
     }else{
       this.params.api.forEachNodeAfterFilter((rowNode, index) => {
@@ -51,13 +45,7 @@ export class CheckboxHeaderComponent implements OnDestroy, IHeaderAngularComp {
           rowNode.setSelected(false);
         }
       });
-     /* for(var i=0; i<checkboxList.length; i++){
-        if(checkboxList[i].className === "checked"){
-          checkboxList[i].removeAttribute('checked');
-        }
-      }*/
       this.params.api.refreshCells();
     }
-  //  console.log(this.params.api.getSelectedNodes());
   }
 }
